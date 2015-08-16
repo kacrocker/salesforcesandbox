@@ -1,0 +1,25 @@
+{
+    "appKeys": {
+        "KEY_DASHBOARD": 3,
+        "KEY_MSG_NAME": 1,
+        "KEY_MSG_TYPE": 0,
+        "KEY_MSG_VALUE": 2
+    },
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "kacrocker.com",
+    "longName": "Salesforce1 for Pebble",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "2",
+    "shortName": "Salesforce1",
+    "uuid": "4fea3427-badb-4129-87ea-8e8d121b93c2",
+    "versionCode": 1,
+    "versionLabel": "1.1",
+    "watchapp": {
+        "watchface": false
+    }
+}

@@ -208,12 +208,12 @@ int main(void) {
   });
  
 //Default information to display on the screen before you link to the phone
-  sf_report_value[0] = "Welcome to                             ";
-  sf_report_name[0] =  "a sample app for                       ";
-  sf_report_value[1] = "Salesforce1                            ";
-  sf_report_name[1] =  "displaying info                        ";
-  sf_report_value[2] = "on your Pebble                         ";
-  sf_report_name[2] =  "wrist watch                            ";
+  sf_report_value[0] = "Welcome to                    ";
+  sf_report_name[0] =  "a sample app for              ";
+  sf_report_value[1] = "Salesforce1                   ";
+  sf_report_name[1] =  "displaying info               ";
+  sf_report_value[2] = "on your Pebble                ";
+  sf_report_name[2] =  "wrist watch                   ";
     
   //Register AppMessage events
 	app_message_register_inbox_received(in_received_handler);					 

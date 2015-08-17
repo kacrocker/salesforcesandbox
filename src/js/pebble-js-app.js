@@ -84,18 +84,15 @@ var restRequest = function(restRqst, respAction, restOutput) {
               default: console.log("UNKNOWN respAction");
                 reportName[restOutput] = "Check your phone";
                 reportValue[restOutput] = "Unable to connect";
-            } //End of Switch for respAction
+            } //End of Switch for respAction            
+            break;
+          case 403: //HTTP Forbidden
+            reportName[restOutput] = "The REST API is not enabled for this Organization.";
+            reportValue[restOutput] = "403 Forbidden";
             break;
           default: console.log("csf.status message not reconized.");
-            //Working here to try to troubleshoot connection issues
-            
             reportName[restOutput] = "Check your phone";
             reportValue[restOutput] = "No data received";
-            
-            
-            
-            
-            //End working section
           } //End of Switch Case for csf.status
         } //End of ReadyState = 4 if block  
       }; //End of the function call that is tracking the csf.onreadystatechange

@@ -30,18 +30,21 @@ var restRequest = function(restRqst, respAction, restOutput) {
     
   try {
     url = url.concat(restRqst);
+    console.log("Request URL on next line.");
+    console.log(url);
     var csf = new XMLHttpRequest();
     csf.open("GET", url, false);
-	  csf.setRequestHeader('Authorization', sf_access_token);
-	  csf.setRequestHeader('Content-Type', 'application/json');
+    csf.setRequestHeader('Authorization', sf_access_token);
+    csf.setRequestHeader('Content-Type', 'application/json');
 
     //----------------------------------------------------------------------------------------- REST Response Handler
     // This is the function that will be called when the REST response is receive from Salesforce
     // It is responsible for parsing the data and storing it locally on the phone
-	  csf.onreadystatechange = function () {
+    csf.onreadystatechange = function () {
       // Now check to see if the requst has completed 'readyState' is 4
+      console.log(csf.response); //hoping to see the full response
       if (csf.readyState == 4) {
-        // Check the status fo the request; '0' is connection failure; '200' is successful data
+        // Check the status for the request; '0' is connection failure; '200' is successful data
         switch (csf.status) {
           case 0:  // request is complete but unable to connect to Salesforce
             reportName[restOutput] = "LogIn to SF1 on Phone";
@@ -60,7 +63,7 @@ var restRequest = function(restRqst, respAction, restOutput) {
                   reportName[restOutput] = tempName.substring(0,30);
                   var reportID = JSONresponse.records[0].Id;
                   var urd = "analytics/reports/"+reportID+"?includeDetails=false";
-                  console.log(">>>>>>>>>>>>>>>>>>>>>>>Search Report Data<<<<<<<<<<<<<<<<<<<<<<<")
+                  console.log(">>>>>>>>>>>>>>>>>>>>>>>Search Report Data<<<<<<<<<<<<<<<<<<<<<<<");
                   restRequest(urd, "ReportData", restOutput);
                   }
                   catch(err) {
@@ -84,10 +87,17 @@ var restRequest = function(restRqst, respAction, restOutput) {
             } //End of Switch for respAction
             break;
           default: console.log("csf.status message not reconized.");
+            //Working here to try to troubleshoot connection issues
+            
             reportName[restOutput] = "Check your phone";
             reportValue[restOutput] = "No data received";
+            
+            
+            
+            
+            //End working section
           } //End of Switch Case for csf.status
-        }; //End of ReadyState = 4 if block  
+        } //End of ReadyState = 4 if block  
       }; //End of the function call that is tracking the csf.onreadystatechange
     //----------------------------------------------------------------------------------------- REST Response Handler    
   
@@ -131,8 +141,9 @@ Pebble.addEventListener("appmessage",
     var iDB = parseInt(vDB);              //Store the integer version of the dashbard number
     if (iDB >= 0 && iDB < 3) {            //Make sure it is one of the dashboards we want to see
         // Define the REST command to send to Salesforce1
-        url = "query?q=SELECT+Id,Description+FROM+Report+WHERE+DeveloperName='Pebble_Watch_Summary_"+vDB+"'";
-        console.log(">>>>>>>>>>>>>>>>>>>>>>Find the Report Name<<<<<<<<<<<<<<<<<<<<<<")
+        var url = "query/?q=SELECT+Id,Description+FROM+Report+WHERE+DeveloperName='Pebble_Watch_Summary_"+vDB+"'";
+        //var url = "query/?explain=SELECT+Id,Description+FROM+Report+WHERE+DeveloperName='Pebble_Watch_Summary_"+vDB+"'";
+        console.log(">>>>>>>>>>>>>>>>>>>>>>Find the Report Name<<<<<<<<<<<<<<<<<<<<<<");
         restRequest(url, "ReportName", iDB);
         // Now send the results back to the Pebble
         var dict = { KEY_MSG_TYPE : iDB, KEY_MSG_NAME : reportName[iDB], KEY_MSG_VALUE : reportValue[iDB]};
